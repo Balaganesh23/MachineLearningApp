@@ -43,7 +43,7 @@ if uploaded_file is not None:
              if plot_type == "Scatter Plot":
                if pd.api.types.is_numeric_dtype(df[x]) and pd.api.types.is_numeric_dtype(df[target]):
                  st.scatter_chart(df,x=x,y=target)
-                  st.balloons()
+                 st.balloons()
                else:
                   st.error("Scatter plot requires numeric columns")
              elif plot_type == "Histogram":
@@ -61,4 +61,5 @@ if uploaded_file is not None:
 
 
         
+
 
