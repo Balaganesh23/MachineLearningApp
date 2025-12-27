@@ -37,20 +37,27 @@ if uploaded_file is not None:
         
         st.subheader("Visualizations 📊")
         # store the selection in a variable
-plot_type = st.selectbox("Choose a plot type", ["Scatter Plot", "Histogram", "Box Plot"])
+        plot_type = st.selectbox("Choose a plot type", ["Scatter Plot", "Histogram", "Box Plot"])
 
-if st.button("Generate Plot"):
-    if plot_type == "Scatter Plot":
-        st.scatter_chart(df[[x, target]], x_label=x, y_label=target)
-        if st.success("Scatter Plot generated."):
-             st.balloons()
-    elif plot_type == "Histogram":
-        st.bar_chart(df[x].value_counts(), x_label=x, y_label="Count")
-        if st.success("Histogram generated."):
-                st.balloons()
-    elif plot_type == "Box Plot":
-        st.write(df[[x, target]].describe(),x_label=x, y_label=target)
-        if st.success("Box Plot generated"):
-                st.balloons()
+        if st.button("Generate Plot"):
+             if plot_type == "Scatter Plot":
+               if pd.api.types.is_numeric_dtype(df[x]) and pd.api.types.is_numeric_dtype(df[target]):
+                 st.scatter_chart(df,x=x,y=target)
+                      st.balloons()
+               else:
+                  st.error("Scatter plot requires numeric columns")
+             elif plot_type == "Histogram":
+                if pd.api.types.is_numeric_dtype(df[x]):
+                  st.bar_chart(pd.cut(df[x], bins=10).value_counts().sort_index())
+                  st.balloons()
+                else:
+                   st.error("Histogram requires numeric data")
+             elif plot_type == "Box Plot":
+                if pd.api.types.is_numeric_dtype(df[x]):
+                   st.box_chart(df[x])
+                   st.balloons()
+                else:
+                   st.error("Box plot requires numeric data.")
+
 
         
