@@ -54,12 +54,13 @@ if uploaded_file is not None:
                    st.error("Histogram requires numeric data")
              elif plot_type == "Box Plot":
                 if pd.api.types.is_numeric_dtype(df[x]):
-                   st.box_chart(df[x])
+                   st.bar_chart(df[x])
                    st.balloons()
                 else:
                    st.error("Box plot requires numeric data.")
 
 
         
+
 
 
